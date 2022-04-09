@@ -2,11 +2,25 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link to="/about">About</router-link> |
+      <button v-if="initialState.user !== 'null' && initialState.user" @click="logout()">Logout</button>
     </div>
     <router-view/>
   </div>
 </template>
+
+<script>
+import { mapActions, mapState } from 'vuex'
+export default {
+  methods: {
+    ...mapActions(['logout']),
+  },
+
+  computed: {
+    ...mapState(['initialState'])
+  }
+}
+</script>
 
 <style>
 #app {
