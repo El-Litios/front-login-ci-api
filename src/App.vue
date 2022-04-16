@@ -1,8 +1,10 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> |
+    <div id="nav" >
+      <div v-if="initialState.user">
+        <router-link  v-if="initialState.user.user.roleid == 1" to="/">Home</router-link> |
+        <router-link  v-if="initialState.user.user.roleid == 2" to="/about">About</router-link> |
+      </div>
       <button v-if="initialState.user !== 'null' && initialState.user" @click="logout()">Logout</button>
     </div>
     <router-view/>
