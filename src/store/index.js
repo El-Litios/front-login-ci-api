@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import api from '../api/api'
+import createPersistedState from 'vuex-persistedstate';
 
 Vue.use(Vuex)
 
@@ -12,6 +13,7 @@ export default new Vuex.Store({
   state: {
     initialState
   },
+  plugins: [createPersistedState()],
   mutations: {
     loginSuccess(state, payload){
       state.initialState.status.loggedIn = true;
@@ -38,7 +40,8 @@ export default new Vuex.Store({
           const userData = {
             accessToken: res.data.access_token,
             username: res.data.user.name,
-            id: res.data.user.id
+            id: res.data.user.id,
+            idrole: res.data.user.roleid
           }
           console.log(userData);
           if (res.data.access_token) {
