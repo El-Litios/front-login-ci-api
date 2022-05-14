@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div id="nav" >
-      <div v-if="initialState.user">
+      <div v-if="initialState.user && initialState.user !== 'null'">
         <router-link  v-if="initialState.user.user.roleid == 1" to="/">Home</router-link> |
         <router-link  v-if="initialState.user.user.roleid == 2" to="/about">About</router-link> |
       </div>
