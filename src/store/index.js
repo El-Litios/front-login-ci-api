@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import api from '../api/api'
 import createPersistedState from 'vuex-persistedstate';
+import router from '../router';
+import AuthHeader from '../services/auth-header'
 
 Vue.use(Vuex)
 
@@ -11,7 +13,8 @@ const initialState = user ? {status: {loggedIn: false}, user} : {status: {logged
 
 export default new Vuex.Store({
   state: {
-    initialState
+    initialState,
+    client: null
   },
   plugins: [createPersistedState()],
   mutations: {
@@ -28,6 +31,10 @@ export default new Vuex.Store({
     logout(state){
       state.initialState.status.loggedIn = false;
       state.initialState.user = null;
+    },
+
+    setClient(state, payload){
+      state.client = payload
     }
   },
   actions: {
@@ -48,6 +55,7 @@ export default new Vuex.Store({
             localStorage.setItem('user', JSON.stringify(userData))
 
             commit('loginSuccess', res.data);
+            router.push({name: 'Dashboard'})
           }
         })
       } catch (err) {
@@ -60,6 +68,23 @@ export default new Vuex.Store({
     logout({commit}){
       localStorage.removeItem('user');
       commit('logout');
+      router.push({name: 'Home'})
+    },
+
+    async getClients({commit}){
+      try {
+        api.get('/client', { headers: AuthHeader() })
+          .then(res => {
+            const clientData = {
+              client: res.data.client,
+              message: res.data.message
+            }
+            console.log(clientData);
+            commit('setClient', clientData)
+          })
+      } catch (error) {
+        console.log(error);
+      }
     }
   },
   modules: {
