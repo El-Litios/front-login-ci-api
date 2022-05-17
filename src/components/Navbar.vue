@@ -28,11 +28,11 @@ import  { mapActions, mapState } from 'vuex'
 export default {
     name: 'Navbar',
   methods: {
-    ...mapActions(["logout"]),
+    ...mapActions('auth', ["logout"]),
   },
 
   computed: {
-    ...mapState(["initialState"]),
+    ...mapState('auth', ["initialState"]),
   },
 };
 </script>

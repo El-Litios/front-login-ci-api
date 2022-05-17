@@ -18,7 +18,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['login']),
+    ...mapActions('auth',['login']),
 
     doLogin(){
       this.login(this.user)

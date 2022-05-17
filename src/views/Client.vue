@@ -21,11 +21,11 @@ export default {
   },
 
   computed: {
-    ...mapState(["client"]),
+    ...mapState('client',["client"]),
   },
 
   methods: {
-    ...mapActions(["getClients"]),
+    ...mapActions('client', ["getClients"]),
   },
 
   created() {
