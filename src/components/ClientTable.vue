@@ -15,17 +15,19 @@
         </thead>
         <tbody>
           <tr v-for="item in clients" :key="item.id">
-                <td>{{ item.name }}</td>
-                <td>{{ item.email }}</td>
-                <td>{{ item.retainer_fee }}</td>
-                <td>{{ item.created_at }}</td>
-                <td>
-                  <v-btn>Editar</v-btn>
-                </td>
-                <td>
-                  <v-btn>Eliminar</v-btn>
-                </td>
-            </tr> 
+            <td>{{ item.name }}</td>
+            <td>{{ item.email }}</td>
+            <td>{{ item.retainer_fee }}</td>
+            <td>{{ item.created_at }}</td>
+            <td>
+              <ModalEditClient :client="item" />
+            </td>
+            <td>
+              <v-btn @click="deleteClient(item.id)" color="red lighten-2" x-small >
+                Eliminar
+              </v-btn>
+            </td>
+          </tr>
         </tbody>
       </template>
     </v-simple-table>
@@ -33,13 +35,22 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+import ModalEditClient from "./ModalEditClient.vue";
 export default {
-  name: 'ClientTable',
+  components: {
+    ModalEditClient,
+  },
+  name: "ClientTable",
   props: {
     clients: {
-      Type: Array
-    }
-  }
+      Type: Array,
+    },
+  },
+
+  methods: {
+    ...mapActions('client', ['deleteClient'])
+  },
 };
 </script>
 
