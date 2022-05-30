@@ -13,6 +13,12 @@
         >Gestion de Clientes</router-link
       >
       |
+      <router-link
+        v-if="initialState.user.user.roleid == 1"
+        :to="{ name: 'Product' }"
+        >Gestion de Productos</router-link
+      >
+      |
     </div>
     <v-btn
       v-if="initialState.user !== 'null' && initialState.user"
