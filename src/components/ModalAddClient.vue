@@ -83,8 +83,8 @@ export default {
   methods: {
     ...mapActions("client", ["createClient"]),
 
-    save(){
-        this.createClient(this.client)
+    save() {
+      this.createClient(this.client);
     },
     validate() {
       this.$refs.form.validate();
