@@ -14,3 +14,13 @@ export const getProduct = async ({ commit }) => {
     console.log(error);
   }
 };
+
+export const getProductCategory = async ({ commit }) => {
+  try {
+    await api.get("/category", { headers: AuthHeader() }).then((res) => {
+      commit("setCategory", res.data.categories)
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
