@@ -1,6 +1,7 @@
 <template>
   <div>
     <Navbar />
+    <ModalAddProduct />
     <ProductTable :products="product.product"/>
   </div>
 </template>
@@ -9,10 +10,12 @@
 import { mapActions, mapState } from "vuex";
 import ProductTable from "../components/ProductTable.vue";
 import Navbar from "../components/Navbar.vue";
+import ModalAddProduct from "../components/ModalAddProduct.vue";
 export default {
   components: {
     Navbar,
     ProductTable,
+    ModalAddProduct
   },
   computed: {
     ...mapState("product", ["product"]),
