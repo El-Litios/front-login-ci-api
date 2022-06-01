@@ -24,7 +24,7 @@
               label="Nombre del producto"
               :rules="nameRules"
               hide-details="auto"
-              v-model="client.name"
+              v-model="product.name"
             ></v-text-field>
 
             <!-- Description -->
@@ -32,20 +32,27 @@
               label="Descripción"
               :rules="desciptionRules"
               hide-details="auto"
-              v-model="client.email"
+              v-model="product.description"
             ></v-text-field>
-
-            <!-- Category -->
-            <v-select :items="items" label="Categoría"></v-select>
 
             <!-- Quantity -->
             <v-text-field
               label="Cantidad"
               :rules="quantityRules"
               hide-details="auto"
-              v-model="client.rent"
+              v-model="product.quantity"
               type="number"
             ></v-text-field>
+
+            <!-- Category -->
+            <v-select
+              :items="category"
+              v-model="product.category"
+              item-value="categoryid"
+              item-text="description"
+              label="Categoría"
+              :rules="categoryRules"
+            ></v-select>
           </v-card-text>
 
           <v-divider></v-divider>
@@ -69,28 +76,40 @@
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex";
 export default {
   data() {
     return {
       dialog: false,
       valid: true,
-      client: {},
+      product: {},
       //RULES
-      nameRules: [(value) => !!value || "Debe ingresar el Nombre."],
-      desciptionRules: [(value) => !!value || "Debe ingresar el Correo."],
-      quantityRules: [(value) => !!value || "Debe ingresar la Renta."],
+      nameRules: [(value) => !!value || "Debe ingresar el nombre."],
+      desciptionRules: [(value) => !!value || "Debe ingresar la descripcion."],
+      quantityRules: [
+        (value) => (!!value && value > 0) || "Debe ser una cantidad aceptada.",
+      ],
+      categoryRules: [(value) => !!value || "Debe seleccionar la categoría"]
     };
   },
 
+  computed: {
+    ...mapState("product", ["category"]),
+  },
+
   methods: {
-    ...mapActions("client", ["createClient"]),
+    ...mapActions("product", ["getProductCategory", "saveProducts"]),
 
     save() {
-      this.createClient(this.client);
+      this.saveProducts(this.product);
     },
     validate() {
       this.$refs.form.validate();
     },
+  },
+
+  created() {
+    this.getProductCategory();
   },
 };
 </script>
