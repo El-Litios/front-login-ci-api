@@ -17,6 +17,7 @@
             <td>{{ item.description }}</td>
             <td>{{ item.stock }}</td>
             <td>{{ item.created_at }}</td>
+            <td><v-btn @click="addToCart(item)" >Agregar al carro</v-btn></td>
           </tr>
         </tbody>
       </template>
@@ -25,6 +26,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 export default {
     props: {
         products: {
@@ -35,6 +37,10 @@ export default {
 
     created(){
       console.log();
+    },
+
+    methods: {
+      ...mapActions('shoppingCart', ['addToCart'])
     }
 }
 </script>
