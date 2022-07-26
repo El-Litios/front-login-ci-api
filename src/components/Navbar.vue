@@ -20,6 +20,11 @@
       >
       |
     </div>
+    <router-link
+        :to="{ name: 'ShoppingCart' }"
+      >Carro de Compras</router-link
+    >
+      |
     <v-btn
       v-if="initialState.user !== 'null' && initialState.user"
       @click="logout()"
