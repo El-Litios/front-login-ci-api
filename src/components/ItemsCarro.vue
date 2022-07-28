@@ -3,10 +3,10 @@
     <td>{{item.name}}</td>
     <td>{{item.quantity}}</td>
     <td>
-        <v-btn>
+        <v-btn @click="addItemCount(item.id)">
             +
         </v-btn>
-        <v-btn>
+        <v-btn @click="removeItemCount(item.id)">
             -
         </v-btn>
     </td>
@@ -15,8 +15,18 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 export default {
-props: ['item']
+props: {
+  item: {
+    type: Object
+  }
+},
+
+methods: {
+  ...mapMutations('shoppingCart', ['addItemCount', 'removeItemCount'])
+},
+
 }
 </script>
 
