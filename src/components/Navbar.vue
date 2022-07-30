@@ -24,6 +24,8 @@
         :to="{ name: 'ShoppingCart' }"
       >Carro de Compras</router-link
     >
+
+    <ModalShoppingCart/>
       |
     <v-btn
       v-if="initialState.user !== 'null' && initialState.user"
@@ -35,9 +37,11 @@
 </template>
 
 <script>
+import ModalShoppingCart from '@/components/ModalShoppingCart.vue'
 import  { mapActions, mapState } from 'vuex'
 export default {
     name: 'Navbar',
+    components: {ModalShoppingCart},
   methods: {
     ...mapActions('auth', ["logout"]),
   },
