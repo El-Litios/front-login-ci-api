@@ -13,7 +13,7 @@
         </thead>
         <!-- Productos del carro -->
         <tbody id="items">
-            <ItemsCarro v-for="item in cart" :key="item.id" :item="item"/>
+            <ItemsCarro v-for="item in getAllItemsCart" :key="item.id" :item="item"/>
         </tbody>
       </template>
     </v-simple-table>
@@ -22,14 +22,16 @@
 
 <script>
 import ItemsCarro from '@/components/ItemsCarro'
-import { mapState } from 'vuex';
+import { mapState, mapGetters } from 'vuex';
 
 export default {
   components: {
     ItemsCarro
   },
   computed: {
-    ...mapState('shoppingCart', ['cart'])
+    ...mapState('shoppingCart', ['cart']),
+    ...mapGetters("shoppingCart", ["getAllItemsCart"]),
+
   }
 };
 </script>
