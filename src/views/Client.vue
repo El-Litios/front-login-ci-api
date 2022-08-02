@@ -2,7 +2,7 @@
   <div>
     <Navbar />
     <ModalAddClient />
-    <table-client :clients="client.client"/>
+    <table-client :clients="client"/>
   </div>
 </template>
 
