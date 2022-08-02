@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="text-center">
-      <v-dialog v-model="dialog" width="400">
+      <v-dialog v-model="dialog" width="400" persistent>
         <template v-slot:activator="{ on, attrs }">
           <v-btn color="yellow darken-2" x-small v-bind="attrs" v-on="on">
             Actualizar
@@ -12,9 +12,9 @@
           <v-card-title class="text-h5 white lighten-2">
             Formulario
           </v-card-title>
-            
+
           <p v-if="client.updated_at">
-            Ultima actualización: {{ client.updated_at }}
+            Ultima actualización: {{ data.updated_at }}
           </p>
 
           <v-form
@@ -29,7 +29,7 @@
                 label="Nombre Completo"
                 :rules="nameRules"
                 hide-details="auto"
-                v-model="client.name"
+                v-model="data.name"
               ></v-text-field>
 
               <!-- Email -->
@@ -37,7 +37,7 @@
                 label="Correo"
                 :rules="emailRules"
                 hide-details="auto"
-                v-model="client.email"
+                v-model="data.email"
               ></v-text-field>
 
               <!-- Rent -->
@@ -45,7 +45,7 @@
                 label="Renta"
                 :rules="rentRules"
                 hide-details="auto"
-                v-model="client.retainer_fee"
+                v-model="data.retainer_fee"
                 type="number"
               ></v-text-field>
             </v-card-text>
@@ -54,6 +54,9 @@
 
             <v-card-actions>
               <v-spacer></v-spacer>
+              <v-btn color="blue darken-1" text @click="cancel()">
+                Close
+              </v-btn>
               <v-btn
                 type="submit"
                 color="primary"
@@ -61,7 +64,7 @@
                 @click="validate"
                 :disabled="!valid"
               >
-                Actualizar Cliente
+                Actualizar
               </v-btn>
             </v-card-actions>
           </v-form>
@@ -72,7 +75,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapState } from "vuex";
 export default {
   props: {
     client: {
@@ -84,11 +87,16 @@ export default {
     return {
       dialog: false,
       valid: true,
+      data: {},
       //RULES
       nameRules: [(value) => !!value || "Debe ingresar el Nombre."],
       emailRules: [(value) => !!value || "Debe ingresar el Correo."],
       rentRules: [(value) => !!value || "Debe ingresar la Renta."],
     };
+  },
+
+  created(){
+    this.data = this.client
   },
 
   methods: {
@@ -100,16 +108,17 @@ export default {
     validate() {
       this.$refs.form.validate();
     },
+    cancel() {
+      this.dialog = false
+      this.$router.go();
+    }
   },
 
-  computed: {
-    
-  },
 };
 </script>
 
 <style lang="css" scoped>
-p{
+p {
   font-size: 15px;
   margin-bottom: 5px;
 }
