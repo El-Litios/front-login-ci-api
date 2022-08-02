@@ -6,11 +6,8 @@ import authHeader from "../../services/auth-header";
 export const getClients = async ({ commit }) => {
   try {
     await api.get("/client", { headers: AuthHeader() }).then((res) => {
-      const clientData = {
-        client: res.data.client,
-        message: res.data.message,
-      };
-      commit("setClient", clientData);
+
+      commit("setClient", res.data.client);
     });
   } catch (error) {
     console.log(error);
@@ -54,15 +51,15 @@ export const updateClient = async ({}, client) => {
 };
 
 export const deleteClient = async ({ commit }, id) => {
-  try {
+   try {
     await api.delete(`/deleteclient/${id}`,
     authHeader()
     )
     .then(res => {
-      console.log(res);
+      console.log(res); 
       commit('deletedClient', id)
     })
-  } catch (error) {
+   } catch (error) {
     console.log(error);
-  }
+  } 
 }
