@@ -2,7 +2,7 @@
   <div>
     <Navbar />
     <ModalAddProduct />
-    <ProductTable :products="product.product"/>
+    <ProductTable :products="product"/>
   </div>
 </template>
 
