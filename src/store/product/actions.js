@@ -1,5 +1,6 @@
 import api from "../../api/api";
 import AuthHeader from "../../services/auth-header";
+import router from "../../router";
 
 export const getProduct = async ({ commit }) => {
   try {
@@ -24,10 +25,11 @@ export const getProductCategory = async ({ commit }) => {
 export const saveProducts = async ({}, product) => {
   try {
     await api.post("/saveproducts",
-    { name: product.name, description: product.description, categoryid: product.category, quantity: product.quantity , stateid: 2},
+    { name: product.name, description: product.description, categoryid: product.category, quantity: product.quantity, price: product.price , stateid: 2},
     AuthHeader())
     .then((res) => {
       console.log(res.data.message);
+      router.go();
     });
   } catch (error) {
     console.log(error.response.data);
