@@ -44,6 +44,15 @@
               type="number"
             ></v-text-field>
 
+            <!-- Price -->
+            <v-text-field
+              label="Precio"
+              :rules="priceRules"
+              hide-details="auto"
+              v-model="product.price"
+              type="number"
+            ></v-text-field>
+
             <!-- Category -->
             <v-select
               :items="category"
@@ -87,6 +96,9 @@ export default {
       nameRules: [(value) => !!value || "Debe ingresar el nombre."],
       desciptionRules: [(value) => !!value || "Debe ingresar la descripcion."],
       quantityRules: [
+        (value) => (!!value && value > 0) || "Debe ser una cantidad aceptada.",
+      ],
+      priceRules: [
         (value) => (!!value && value > 0) || "Debe ser una cantidad aceptada.",
       ],
       categoryRules: [(value) => !!value || "Debe seleccionar la categoría"]
