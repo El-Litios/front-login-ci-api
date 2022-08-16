@@ -1,3 +1,7 @@
+import api from "../../api/api";
+import AuthHeader from "../../services/auth-header";
+
+
 export const addToCart = ({ commit, state }, product) => {
   state.cart.hasOwnProperty(product.id)
     ? 
@@ -9,4 +13,24 @@ export const addToCart = ({ commit, state }, product) => {
 
   
   commit("setCart", product);
+};
+
+export const getClientInfo = async ({ commit }) => {
+  try {
+    await api.get("client/client-info", { headers: AuthHeader() }).then((res) => {
+      commit("setClient", res.data.client);
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getPaymentMethods = async ({ commit }) => {
+  try {
+    await api.get("paymentmethodsale", { headers: AuthHeader() }).then((res) => {
+      commit("setPaymentMethods", res.data.methods);
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
