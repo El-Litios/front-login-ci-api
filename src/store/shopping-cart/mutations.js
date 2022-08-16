@@ -18,3 +18,11 @@ export const removeItemCount = (state, payload) => {
     Vue.delete( state.cart, payload )
   }
 } 
+
+export const setClient = (state, payload) => {
+  state.client = payload
+}
+
+export const setPaymentMethods = (state, payload) => {
+  state.paymentmethods = payload
+}
