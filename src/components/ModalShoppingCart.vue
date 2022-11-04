@@ -7,7 +7,7 @@
       transition="dialog-bottom-transition"
     >
       <template v-slot:activator="{ on, attrs }">
-        <v-btn color="primary" dark v-bind="attrs" v-on="on">
+        <v-btn color="primary" :disabled="isdisabled" dark v-bind="attrs" v-on="on">
           Open Dialog
         </v-btn>
       </template>
@@ -58,17 +58,27 @@
                 item-text="name"
                 item-value="id"
                 label="Cliente"
+                v-model="saleValues.client"
               ></v-select>
             </v-col>
             <v-col md="4">
               <v-select
                 :items="paymentmethods"
                 item-text="description"
-                item-value="id"
+                item-value="paymentmethodid"
                 label="Metodo de Pago"
+                v-model="saleValues.payment"
               ></v-select>
             </v-col>
           </v-row>
+          <v-textarea
+            label="Descripcion"
+            class="mx-1"
+            v-model="saleValues.description"
+          ></v-textarea>
+          <v-btn block color="primary" @click="setSaleValues"
+            >Terminar compra</v-btn
+          >
         </v-container>
       </v-card>
     </v-dialog>
@@ -82,17 +92,35 @@ export default {
   data() {
     return {
       dialog: false,
+      saleValues: {},
     };
   },
 
   computed: {
     ...mapState("shoppingCart", ["cart", "client", "paymentmethods"]),
     ...mapGetters("shoppingCart", ["getAllItemsCart", "getTotalPrice"]),
+
+    isdisabled(){
+      return Object.keys(this.getAllItemsCart).length === 0 && this.getAllItemsCart.constructor === Object ? true : false
+    }
   },
 
   methods: {
     ...mapActions("shoppingCart", ["getClientInfo", "getPaymentMethods"]),
+    ...mapActions("sales", ["addSale"]),
     ...mapMutations("shoppingCart", ["addItemCount", "removeItemCount"]),
+
+    setSaleValues() {
+      const values = {
+        payment: this.saleValues.payment,
+        client: this.saleValues.client,
+        items: Object.values(this.getAllItemsCart),
+        totalPrice: this.getTotalPrice,
+        description: this.saleValues.description
+      };
+
+      this.addSale(values);
+    },
   },
 
   created() {
